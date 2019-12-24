@@ -1,5 +1,6 @@
 #include "renderarea.h"
 #include "qpainter.h"
+#include <math.h>
 
 RenderArea::RenderArea(QWidget *parent) :
     QWidget(parent),
@@ -15,6 +16,15 @@ QSize RenderArea::minimumSizeHint() const {
 QSize RenderArea::sizeHint() const {
     return QSize(400,200);
 }
+
+QPointF RenderArea::compute_astroid(float t){
+    float cos_t = cos(t);
+    float sin_t = sin(t);
+    float x = 2 * pow(cos_t,3);
+    float y = 2 * pow(sin_t, 3);
+    return QPointF(x,y);
+}
+
 void RenderArea::paintEvent(QPaintEvent *event){
     Q_UNUSED(event)
 
@@ -42,6 +52,19 @@ void RenderArea::paintEvent(QPaintEvent *event){
     painter.setPen(mShapeColor);
     //drawing area
     painter.drawRect(this->rect());
-    painter.drawLine(this->rect().topLeft(), this->rect().bottomRight());
+
+    QPoint center = this->rect().center(); // store center coord of rendering area
+
+    int stepCount = 256;
+    float scale = 40;
+    float intervalLength = 2*M_PI;
+    float step = intervalLength/stepCount;
+    for (float t=0; t<intervalLength; t+=step){
+        QPointF point = compute_astroid(t);
+        QPoint pixel;
+        pixel.setX(point.x()*scale+center.x());
+        pixel.setY(point.y()*scale+center.y());
+        painter.drawPoint(pixel);
+    }
 
 } // need to override this to be able to paint

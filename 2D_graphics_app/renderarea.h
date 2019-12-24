@@ -39,6 +39,8 @@ private:
     QColor mBackgroundColor; // storing color here so we can change it outside
     QColor mShapeColor;
     ShapeType mShape;
+    QPointF compute_astroid(float t);
+
 };
 
 #endif // RENDERAREA_H
