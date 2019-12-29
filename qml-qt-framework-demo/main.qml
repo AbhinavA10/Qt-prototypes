@@ -10,7 +10,7 @@ ApplicationWindow {
     height: 600
     title: qsTr("Hello Qt")
 
-    // open a file using JS
+    // open a file using JSk
     function openFile(fileURL){
         var request = new XMLHttpRequest()
         request.open("GET", fileURL, false)
