@@ -10,7 +10,7 @@ class RgbHistogramModel;
 class RgbHistogram : public QObject
 {
     Q_OBJECT
-
+    //properties are just Q_PROPERTY in C++
     Q_PROPERTY(QUrl imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
     Q_PROPERTY(int binCount READ binCount WRITE setBinCount NOTIFY binCountChanged)
     Q_PROPERTY(int maxValue READ maxValue NOTIFY maxValueChanged)
@@ -86,3 +86,4 @@ private:
 };
 
 #endif // RGBHISTOGRAM_H
+

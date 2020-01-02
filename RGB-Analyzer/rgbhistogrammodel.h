@@ -4,11 +4,11 @@
 #include <QAbstractItemModel>
 #include "rgbhistogram.h"
 
-class RgbHistogramModel : public QAbstractListModel
+class RgbHistogramModel : public QAbstractListModel // need to inherit this class to make this class a model
 {
     Q_OBJECT
 
-    Q_PROPERTY(RgbHistogram *histogram READ histogram WRITE setHistogram NOTIFY histogramChanged)
+    Q_PROPERTY(RgbHistogram *histogram READ histogram WRITE setHistogram NOTIFY histogramChanged) // to refer to a histogram
 
 public:
     enum HistogramRoles {
@@ -22,7 +22,7 @@ public:
         QAbstractListModel(parent), m_histogram(0)
     { }
 
-    QHash<int, QByteArray> roleNames() const {
+    QHash<int, QByteArray> roleNames() const { // implemented as part of being a model
         QHash<int, QByteArray> roles;
         roles[BinNumberRole] = "binNumber";
         roles[RedCountRole] = "redCount";
@@ -31,11 +31,11 @@ public:
         return roles;
     }
 
-    int rowCount(const QModelIndex &) const {
+    int rowCount(const QModelIndex &) const { // implemented as part of being a model
         return m_histogram->binCount();
     }
 
-    QVariant data(const QModelIndex &index, int role) const {
+    QVariant data(const QModelIndex &index, int role) const { // implemented due to being a model
         if (!m_histogram)
             return QVariant(0);
         int bin = index.row();
