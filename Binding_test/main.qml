@@ -32,7 +32,12 @@ ApplicationWindow {
             font.pixelSize: 40
             horizontalAlignment: Text.AlignHCenter
             Binding on text {
-                value: sensorData.sensorReading.toFixed(1)
+                // bind text to sensorData.sensorReading
+                value: {
+                    // surprised to find this runs, regardless of value of controlRect.activated
+                    console.log("new value");
+                    sensorData.sensorReading.toFixed(1)
+                }
                 when: controlRect.activated
             }
         }
@@ -55,9 +60,13 @@ ApplicationWindow {
         }
 
         MouseArea {
-               anchors.fill: parent
-               onClicked: { parent.activated = !parent.activated}
-           }
+            anchors.fill: parent
+            onClicked: {
+                console.log("State changed to",!parent.activated);
+                parent.activated = !parent.activated
+            }
+        }
+
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             width: 93
