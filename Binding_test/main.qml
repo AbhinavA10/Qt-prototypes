@@ -3,20 +3,20 @@ import QtQuick.Controls 2.0
 
 ApplicationWindow {
     visible: true
-    width: 300
+    width: 600
     height: 200
     title: qsTr("Window")
 
     Rectangle{
-        width:198
-        height:151
-        anchors.centerIn: parent
+        id: readingRect
+        x: 280
+        y: 20
+        width:200
+        height:150
         color:"red"
 
         Text {
-            id: element1
             anchors.horizontalCenter: parent.horizontalCenter
-            y: 8
             width: 93
             height: 39
             text: qsTr("Reading")
@@ -24,15 +24,54 @@ ApplicationWindow {
             font.pixelSize: 30
         }
         Text {
-            id: element
             anchors.horizontalCenter: parent.horizontalCenter
             y: 76
             width: 85
             height: 67
-            text: sensorData.sensorReading
+            text: "off"
             font.pixelSize: 40
             horizontalAlignment: Text.AlignHCenter
+            Binding on text {
+                value: sensorData.sensorReading.toFixed(1)
+                when: controlRect.activated
+            }
+        }
+    }
+
+    Rectangle{
+        id: controlRect
+        x: 20
+        y: 20
+        width:200
+        height:150
+        property bool activated: true
+        color:{
+            if (controlRect.activated){
+                "green"
+            }
+            else{
+                "yellow"
+            }
         }
 
+        MouseArea {
+               anchors.fill: parent
+               onClicked: { parent.activated = !parent.activated}
+           }
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 93
+            height: 39
+            text: {
+                if (controlRect.activated){
+                    "Deactivate\nbinding"
+                }
+                else{
+                    "Activate\nBinding"
+                }
+            }
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 30
+        }
     }
 }

@@ -7,13 +7,14 @@ class SensorData : public QObject
 {
     Q_OBJECT
 public:
-    Q_PROPERTY(int sensorReading MEMBER m_sensorReading NOTIFY sensorReadingChanged)
+    Q_PROPERTY(double sensorReading MEMBER m_sensorReading NOTIFY sensorReadingChanged)
 
     explicit SensorData(QObject *parent = nullptr);
     ~SensorData() {}
 
 private:
-    int m_sensorReading;
+    double m_sensorReading;
+    double temp;
     QTimer m_timer;
 
 signals:
